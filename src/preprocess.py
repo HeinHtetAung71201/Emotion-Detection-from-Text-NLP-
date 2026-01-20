@@ -31,7 +31,13 @@ def remove_stopwords(text):
     return " ".join([word for word in text.split() if word not in stop_words])
 
 data['clean_text'] = data['content'].apply(clean_tweet)
-# data.to_csv('cleaned_data.csv', index=False)
-data['clean_stopWords']= data['clean_text'].apply(remove_stopwords)
-print(data['clean_text'].head(),"Cleaned Text <<<<")
-print(data['clean_stopWords'].head(),"Cleaned SW <<<<")
+data['Content']= data['clean_text'].apply(remove_stopwords)
+data['sentiment']= data['sentiment'].replace('empty','neutral')
+# print(data['clean_text'].head(),"Cleaned Text <<<<")
+print(data[['Content','sentiment']].head(),"Cleaned SW <<<<")
+data= data[data['Content'].str.strip() != ""]
+data.dropna(subset=['Content'], inplace=True)
+print(data[['Content','sentiment']],"Complete Cleaning<<<")
+data[['Content','sentiment']].to_csv('cleaned_data.csv', index=False)
+
+
