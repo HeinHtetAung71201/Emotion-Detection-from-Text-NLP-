@@ -3,9 +3,9 @@ import re
 import nltk
 import string
 
-nltk.download('stopwords')
-nltk.download('wordnet')
-nltk.download('omw-1.4')
+# nltk.download('stopwords')
+# nltk.download('wordnet')
+# nltk.download('omw-1.4')
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -27,7 +27,7 @@ lemmatizer = WordNetLemmatizer()
 # =============================
 
 def normalize_repeated_letters(word):
-    # soooo -> soo
+    # happpy -> happy
     return re.sub(r'(.)\1{2,}', r'\1\1', word)
 
 def clean_tweet(text):
@@ -73,10 +73,11 @@ def preprocess_text(text):
 
     return " ".join(processed_words)
 
-# =============================
+
 # Apply Cleaning
-# =============================
+# Regressin 
 data['clean_text'] = data['content'].apply(clean_tweet)
+
 data['Content'] = data['clean_text'].apply(preprocess_text)
 
 # Remove empty rows
@@ -106,9 +107,9 @@ data['sentiment'] = data['sentiment'].apply(group_sentiments)
 # =============================
 # Save Output
 # =============================
-print(data[['Content','sentiment']].head(), "<<< Sample Cleaned Data")
+# print(data[['Content','sentiment']].head(), "<<< Sample Cleaned Data")
 
 data[['Content','sentiment']].to_csv('cleaned_data.csv', index=False)
 
-print("\nClass Distribution:")
-print(data['sentiment'].value_counts(),"<<<Counting Sentiments")
+# print("\nClass Distribution:")
+# print(data['sentiment'].value_counts(),"<<<Counting Sentiments")
