@@ -21,10 +21,12 @@ true_label = input("Enter true emotion (optional, press Enter to skip): ").strip
 # Clean
 cleaned_new = pre.clean_tweet(new_tweet)
 mark_neg= train.mark_negation(cleaned_new)
+prepocessed_new = pre.preprocess_text(cleaned_new)
+# mark_neg= train.mark_negation(cleaned_new)
 
 
 # Vectorize
-vectorized_new = train.tfidf.transform([mark_neg])
+vectorized_new = train.tfidf.transform([prepocessed_new])
 
 # Predict
 prediction = train.model.predict(vectorized_new)
@@ -34,7 +36,8 @@ predicted_label = prediction[0]
 confidence = max(probabilities[0]) * 100
 
 print("\n========== PREDICTION RESULT ==========")
-print("Cleaned Text :", cleaned_new)
+print("Cleaned Text:", cleaned_new)
+print("Segmented Token:", prepocessed_new.split())
 print("Predicted Emotion :", predicted_label)
 print(f"Confidence : {confidence:.2f}%")
 
