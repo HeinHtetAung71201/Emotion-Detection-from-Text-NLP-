@@ -20,9 +20,11 @@ true_label = input("Enter true emotion (optional, press Enter to skip): ").strip
 
 # Clean
 cleaned_new = pre.clean_tweet(new_tweet)
+mark_neg= train.mark_negation(cleaned_new)
+
 
 # Vectorize
-vectorized_new = train.tfidf.transform([cleaned_new])
+vectorized_new = train.tfidf.transform([mark_neg])
 
 # Predict
 prediction = train.model.predict(vectorized_new)
